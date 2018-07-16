@@ -3,4 +3,4 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby "2.5.1"
 
-gemspec path: "../../mini-rails.gemspec"
+gemspec path: "../.."
