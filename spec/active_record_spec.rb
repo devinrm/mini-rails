@@ -11,27 +11,33 @@ RSpec.describe ActiveRecord do
     )
   end
 
-  it "#initialize" do
-    post = Post.new(id: 1, title: "My first post")
+  describe "#initialize" do
+    it "initializes successfully" do
+      post = Post.new(id: 1, title: "My first post")
 
-    expect(post.id).to eq(1)
-    expect(post.title).to eq("My first post")
+      expect(post.id).to eq(1)
+      expect(post.title).to eq("My first post")
+    end
   end
 
-  it ".find" do
-    post = Post.find(1)
+  describe ".find" do
+    it "finds individual record successfully" do
+      post = Post.find(1)
 
-    expect(post).to be_a(Post)
-    expect(post.id).to eq(1)
-    expect(post.title).to eq("Blueberry Muffins")
+      expect(post).to be_a(Post)
+      expect(post.id).to eq(1)
+      expect(post.title).to eq("Blueberry Muffins")
+    end
   end
 
-  it ".all" do
-    post = Post.all.first
+  describe ".all" do
+    it "finds first record successfully" do
+      post = Post.all.first
 
-    expect(post).to be_a(Post)
-    expect(post.id).to eq(1)
-    expect(post.title).to eq("Blueberry Muffins")
+      expect(post).to be_a(Post)
+      expect(post.id).to eq(1)
+      expect(post.title).to eq("Blueberry Muffins")
+    end
   end
 
   it ".where" do
