@@ -40,15 +40,17 @@ RSpec.describe ActiveRecord do
     end
   end
 
-  it ".where" do
-    relation = Post.where("id = 2").where("title IS NOT NULL")
+  describe ".where" do
+    it "finds record based on off query" do
+      relation = Post.where("id = 2").where("title IS NOT NULL")
 
-    expect(relation.to_sql).to eq(
-      "SELECT * FROM posts WHERE id = 2 AND title IS NOT NULL",
-    )
+      expect(relation.to_sql).to eq(
+        "SELECT * FROM posts WHERE id = 2 AND title IS NOT NULL",
+      )
 
-    post = relation.first
-    expect(post.id).to eq(2)
+      post = relation.first
+      expect(post.id).to eq(2)
+    end
   end
 
   it "executes sql" do
