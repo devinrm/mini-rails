@@ -3,6 +3,7 @@ module ActiveSupport
     extend self
 
     attr_accessor :autoload_paths
+
     self.autoload_paths = []
 
     def search_for_file(name)
@@ -12,5 +13,17 @@ module ActiveSupport
       end
       nil
     end
+  end
+end
+
+class Module
+  def const_missing(name)
+    file = ActiveSupport::Dependencies.search_for_file(name.to_s.underscore)
+
+    raise NameError, "Uninitialized constant #{name}" unless file
+
+    require file.sub(/\.rb$/, "")
+
+    const_get(name)
   end
 end
