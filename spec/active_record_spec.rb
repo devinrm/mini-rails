@@ -1,16 +1,6 @@
 require "spec_helper"
 
-require "active_record"
-require "muffin_blog/app/models/application_record"
-require "muffin_blog/app/models/post"
-
 RSpec.describe ActiveRecord do
-  before do
-    Post.establish_connection(
-      database: "#{__dir__}/muffin_blog/db/development.sqlite3",
-    )
-  end
-
   describe "#initialize" do
     it "initializes successfully" do
       post = Post.new(id: 1, title: "My first post")

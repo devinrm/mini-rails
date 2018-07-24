@@ -1,5 +1,6 @@
 require "bundler/setup"
-require "mini/rails"
+require "rails"
+require_relative "muffin_blog/config/environment"
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
