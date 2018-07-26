@@ -13,6 +13,10 @@ RSpec.describe ActionController do
         response << "show"
       end
 
+      def redirect
+        redirect_to "/"
+      end
+
       private
 
       def callback
@@ -52,6 +56,22 @@ RSpec.describe ActionController do
       controller = PostsController.new
       controller.request = Request.new
       controller.process(:show)
+    end
+  end
+
+  describe "#redirect_to" do
+    class Response
+      attr_accessor :status, :location, :body
+    end
+
+    it "is successful" do
+      controller = TestController.new
+      controller.response = Response.new
+      controller.process(:redirect)
+
+      expect(controller.response.status).to eq(302)
+      expect(controller.response.location).to eq("/")
+      expect(controller.response.body).to eq(["You are being redirected"])
     end
   end
 end
