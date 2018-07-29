@@ -48,4 +48,38 @@ RSpec.describe ActionDispatch do
       expect(route.name).to eq("new_post")
     end
   end
+
+  describe "#call" do
+    it "calls the controller action and executes it successfully" do
+      routes = Rails.application.routes
+
+      request = Rack::MockRequest.new(routes)
+
+      expect(request.get("/").status).to eq(200)
+      expect(request.get("/posts").status).to eq(200)
+      expect(request.get("/posts/new").status).to eq(200)
+      expect(request.get("/posts/show?id=1").status).to eq(200)
+
+      expect(request.post("/").body).to eq("Not found")
+    end
+  end
+
+  describe "#middleware_stack" do
+    it "works correctly" do
+      app = Rails.application
+
+      request = Rack::MockRequest.new(app)
+
+      expect(request.get("/").status).to eq(200)
+      expect(request.get("/posts").status).to eq(200)
+      expect(request.get("/posts/new").status).to eq(200)
+      expect(request.get("/posts/show?id=1").status).to eq(200)
+
+      expect(request.post("/").body).to eq("Not found")
+
+      expect(request.get("/favicon.ico").status).to eq(200)
+      expect(request.get("/assets/application.js").status).to eq(200)
+      expect(request.get("/assets/application.css").status).to eq(200)
+    end
+  end
 end

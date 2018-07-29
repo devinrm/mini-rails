@@ -1,5 +1,6 @@
 require "bundler/setup"
 require "rails"
+require "rack/mock"
 require_relative "muffin_blog/config/environment"
 
 RSpec.configure do |config|
