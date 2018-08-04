@@ -62,4 +62,29 @@ RSpec.describe ActionView do
       expect(template_one).to eq(template_two)
     end
   end
+
+  describe "#view_assigns" do
+    it "renders views with assigned variables" do
+      class TestController < ActionController::Base
+        def index
+          @var = "var value"
+        end
+      end
+
+      controller = TestController.new
+      controller.index
+
+      expect(controller.view_assigns).to eq("var" => "var value")
+    end
+  end
+
+  describe "#render" do
+    it "renders templates successfully" do
+      request = Rack::MockRequest.new(Rails.application)
+      response = request.get("/posts/show?id=1")
+
+      expect(response.body).to include("Blueberry Muffins")
+      expect(response.body).to include("<html>")
+    end
+  end
 end

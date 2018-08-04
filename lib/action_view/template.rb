@@ -30,7 +30,7 @@ module ActionView
       code = ERB.new(@source).src
 
       CompiledTemplates.module_eval <<-CODE
-        def method_name
+        def #{method_name}
           #{code}
         end
       CODE
