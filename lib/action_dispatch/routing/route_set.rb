@@ -14,7 +14,7 @@ module ActionDispatch
         controller.request = request
         controller.response = Rack::Response.new
         controller.process(action)
-        controller.response.finish
+        controller.response
       end
     end
 
@@ -45,6 +45,26 @@ module ActionDispatch
           route.dispatch(request)
         else
           [404, { "Content-Type" => "text/plain" }, ["Not found"]]
+        end
+      end
+
+      def url_helpers
+        routes = @routes
+
+        Module.new do
+          routes.each do |route|
+            if route.name
+              define_method(route.name + "_path") do |params = nil|
+                if params
+                  route.path + "?" + Rack::Utils.build_query(params)
+                else
+                  route.path
+                end
+              end
+
+              # Not implemented _url helper
+            end
+          end
         end
       end
     end

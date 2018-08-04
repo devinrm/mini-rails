@@ -79,12 +79,20 @@ RSpec.describe ActionView do
   end
 
   describe "#render" do
-    it "renders templates successfully" do
+    it "renders show template successfully" do
       request = Rack::MockRequest.new(Rails.application)
       response = request.get("/posts/show?id=1")
 
       expect(response.body).to include("Blueberry Muffins")
       expect(response.body).to include("<html>")
+    end
+
+    it "renders index template successfully with url helpers" do
+      request = Rack::MockRequest.new(Rails.application)
+      response = request.get("/posts")
+
+      expect(response.body).to include("The Muffin Blog")
+      expect(response.body).to include('<a href="/posts/new">New Post</a>')
     end
   end
 end
